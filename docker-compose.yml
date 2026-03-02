@@ -51,14 +51,9 @@ services:
         condition: service_healthy
     volumes:
       - ./backend:/rails
-      - backend_gems:/usr/local/bundle
-    command: >
-      sh -c "
-        bundle install &&
-        rails db:migrate &&
-        rails db:seed &&
-        rails server -b 0.0.0.0
-      "
+    # Bypass the bash-based docker-entrypoint script and start Rails directly.
+    # You can run `docker compose run backend ./bin/rails db:prepare` once if the DB isn't prepared.
+    entrypoint: ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
     networks:
       - expense_network
 
@@ -73,17 +68,12 @@ services:
       - "5173:5173"
     depends_on:
       - backend
-    volumes:
-      - ./frontend:/app
-      - frontend_node_modules:/app/node_modules
     command: npm run dev -- --host
     networks:
       - expense_network
 
 volumes:
   mysql_data:
-  backend_gems:
-  frontend_node_modules:
 
 networks:
   expense_network:
