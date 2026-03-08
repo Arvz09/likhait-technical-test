@@ -30,6 +30,9 @@ RUN bundle config set --local deployment 'false' && \
 # Copy application code
 COPY . .
 
+# Fix Windows CRLF line endings in bin scripts
+RUN sed -i 's/\r$//' bin/*
+
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile --gemfile app/ lib/
 

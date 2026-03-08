@@ -37,6 +37,9 @@
 # Ignore development files
 /.devcontainer
 
+# Ignore vendor bundle (gems are installed fresh inside the container)
+/vendor/bundle
+
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*

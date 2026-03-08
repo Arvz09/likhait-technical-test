@@ -37,6 +37,11 @@ export interface TopCategory {
   count: number;
 }
 
+export interface Category {
+  id: number;
+  name: string;
+}
+
 export interface DayExpenses {
   day: number;
   expenses: Expense[];
